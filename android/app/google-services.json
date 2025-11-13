@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "773979981923",
+    "project_id": "nexaflow-1d94b",
+    "storage_bucket": "nexaflow-1d94b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773979981923:android:b94d112d497fa2d3969056",
+        "android_client_info": {
+          "package_name": "com.example.nexaflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCb6gOjXMlEnJsmq2QEgltzEqyM-EY333s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
