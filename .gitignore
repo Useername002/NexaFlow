@@ -50,4 +50,4 @@ android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 
 #note UI 
-nexaflow/lib/note_UI.dart
+lib/note_UI.dart
