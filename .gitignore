@@ -51,3 +51,6 @@ ios/Runner/GoogleService-Info.plist
 
 #note UI 
 lib/note_UI.dart
+
+#local database
+lib/DataBase/local/db_helper.dart
