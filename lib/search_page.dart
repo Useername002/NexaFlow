@@ -63,10 +63,9 @@ class SearchState extends State<Search> {
                 ),
               ),
             ),
-            if(isSearching) ...[
-              buildSearchResult()
-            ]
-            else ...[
+            if (isSearching) ...[
+              buildSearchResult(),
+            ] else ...[
               SizedBox(height: 50),
               //popular section
               buildPopularProducts(),
@@ -91,11 +90,13 @@ class SearchState extends State<Search> {
                   ),
                 ),
                 onPressed: () {},
-                child: Text("Explore more", style: TextStyle(color: Colors.blue)),
+                child: Text(
+                  "Explore more",
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
               SizedBox(height: 50),
-            ]
-
+            ],
           ],
         ),
       ),
@@ -104,7 +105,10 @@ class SearchState extends State<Search> {
 
   Widget buildPopularProducts() {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('products').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('products')
+          .limit(10)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -167,6 +171,7 @@ class SearchState extends State<Search> {
       stream: FirebaseFirestore.instance
           .collection('products')
           .orderBy("createdAt", descending: true)
+          .limit(7)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
