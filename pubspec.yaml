@@ -1,5 +1,5 @@
 name: nexaflow
-description: "A new Flutter project."
+description: "flutter based e-commerce app that uses firebase as a remote DB with features like add products and many more."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -44,6 +44,8 @@ dependencies:
   firebase_auth: ^6.1.0
   cloud_firestore: ^6.0.2
   connectivity_plus: ^7.0.0
+  image_picker: ^1.2.1
+  firebase_storage: ^13.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

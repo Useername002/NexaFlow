@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nexaflow/DataBase/remote/firebaseauth.dart';
 import 'package:nexaflow/homepage.dart';
 import 'package:nexaflow/underconstruction.dart';
 import 'package:path/path.dart';
 import 'package:nexaflow/login_UI.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Addproducts extends StatefulWidget {
   @override
@@ -12,15 +16,17 @@ class Addproducts extends StatefulWidget {
 }
 
 class AddproductsState extends State<Addproducts> {
-
-  Future<void>MoveToHome(BuildContext context)async
-  {
-   // await Future.delayed(Duration(milliseconds: 100));
-    final user =RemoteDb.instance.getCurrentUser();
-    if(user==null) return;
-    try{
-      final doc= await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-      if(!doc.exists) return;
+  //function for view home page
+  Future<void> MoveToHome(BuildContext context) async {
+    // await Future.delayed(Duration(milliseconds: 100));
+    final user = RemoteDb.instance.getCurrentUser();
+    if (user == null) return;
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      if (!doc.exists) return;
 
       final userData = doc.data()!;
       final userName = userData['name'] ?? "User";
@@ -28,30 +34,27 @@ class AddproductsState extends State<Addproducts> {
       final profileUrl = userData["profileUrl"] ?? " ";
       if (!context.mounted) return;
       Navigator.push(
-          context,
-          MaterialPageRoute(builder:(_)=>HomePage(
-              userName: userName,
-              phoneNumber: userPhone,
-              profileUrl: profileUrl
-          )
-          ));
-
-    }
-        catch(e){
+        context,
+        MaterialPageRoute(
+          builder: (_) => HomePage(
+            userName: userName,
+            phoneNumber: userPhone,
+            profileUrl: profileUrl,
+          ),
+        ),
+      );
+    } catch (e) {
       print("Error in MoveToHome():$e");
-        }
-
-
+    }
   }
 
-
   bool isAdding = false;
+  // image picker variable
+  XFile? picked_image;
+  String? uploadedImageURL;
 
   @override
   Widget build(BuildContext context) {
-
-    //trending and popular controller
-
     //controllers for add products dialog box
     final nameController = TextEditingController();
     final categoryController = TextEditingController();
@@ -185,7 +188,7 @@ class AddproductsState extends State<Addproducts> {
               onTap: () {
                 Navigator.pop(context);
                 showDialog(
-                  barrierDismissible:false,
+                  barrierDismissible: false,
                   context: context,
                   builder: (_) => AlertDialog(
                     title: Text("Update carousel"),
@@ -200,21 +203,26 @@ class AddproductsState extends State<Addproducts> {
                       ),
                     ),
                     actions: [
-                      TextButton(onPressed: ()=>Navigator.pop(context),child: Text("Cancel")),
-                      TextButton(onPressed: ()=>Navigator.pop(context),child: Text("Update")),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Update"),
+                      ),
                     ],
                   ),
                 );
               },
             ),
             ListTile(
-              leading:Icon(Icons.home),
+              leading: Icon(Icons.home),
               title: Text("View home page"),
-              onTap:(){
+              onTap: () {
                 Navigator.pop(context);
                 MoveToHome(context);
-              }
-
+              },
             ),
             ListTile(
               leading: Icon(Icons.logout),
@@ -244,7 +252,7 @@ class AddproductsState extends State<Addproducts> {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(builder: (_) => Login_UI()),
-                                (route) => false,
+                            (route) => false,
                           );
                         },
                         child: Text("Log out"),
@@ -267,7 +275,6 @@ class AddproductsState extends State<Addproducts> {
           ),
           onPressed: () {
             showDialog(
-
               barrierDismissible: false,
               context: context,
               builder: (_) => AlertDialog(
@@ -382,7 +389,6 @@ class AddproductsState extends State<Addproducts> {
                         ),
                       ),
                       SizedBox(height: 2),
-
                     ],
                   ),
                 ),
