@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:nexaflow/splash_screen.dart';
@@ -8,6 +7,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //related to web app
 import 'package:flutter/foundation.dart';
+//internet_connection_checker_plus
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 
 final GlobalKey<ScaffoldMessengerState> rootMessengerKey =
@@ -100,15 +101,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<bool>checkInternetConnection()async{
-    final testHosts=['google.com','example.com','cloudflare.com'];
-    for(final host in testHosts) {
-      try {
-        final result = await InternetAddress.lookup(host).timeout(
-            const Duration(seconds: 3));
-        if(result.isNotEmpty && result[0].rawAddress.isNotEmpty) return true;
-      } catch (_) {}
-    }
-    return false;
+    return await InternetConnection().hasInternetAccess;
   }
 
   @override
