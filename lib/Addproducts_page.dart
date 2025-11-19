@@ -49,9 +49,6 @@ class AddproductsState extends State<Addproducts> {
   }
 
   bool isAdding = false;
-  // image picker variable
-  XFile? picked_image;
-  String? uploadedImageURL;
 
   @override
   Widget build(BuildContext context) {

@@ -6,13 +6,28 @@ import 'package:nexaflow/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//related to web app
+import 'package:flutter/foundation.dart';
+
 
 final GlobalKey<ScaffoldMessengerState> rootMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if(kIsWeb){
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyBGb4C50O_DXKo-VCS5Kn0iSEbHxh_Up2c",
+          appId: "1:773979981923:web:e56d09e35d64158c969056",
+          messagingSenderId:"773979981923",
+          projectId:  "nexaflow-1d94b",
+      ),
+    );
+  }
+  else{
+    await Firebase.initializeApp();
+  }
   // Quick Firebase test:
   // try {
   //   await FirebaseAuth.instance.signInAnonymously();
