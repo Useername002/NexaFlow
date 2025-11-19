@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOSOMQ1hWcUnqhdqac8CdsLDTw1TMLQIPT4g&s",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt1NOI5QkaGE3S2GkTUT5PbSKcAJLp4YEFlw&s",
     ];
-      
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.home),
               title: Text("Home"),
-              onTap: ()=> Navigator.pop(context),
+              onTap: () => Navigator.pop(context),
             ),
             ListTile(
               leading: Icon(Icons.search_outlined),
@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  SliverToBoxAdapter(child: SizedBox(height: 10,),),
+                  SliverToBoxAdapter(child: SizedBox(height: 10)),
                   SliverToBoxAdapter(
                     child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
@@ -344,45 +344,80 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 final product = products[index];
                                 return GestureDetector(
-                                  onTap:(){
-                                    Navigator.push(context, MaterialPageRoute(builder: (_)=>underconstruction()));
-                                    },
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => underconstruction(),
+                                      ),
+                                    );
+                                  },
                                   child: Card(
                                     color: Colors.white,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                     elevation: 3,
                                     child: Column(
                                       children: [
-                                        Expanded(child: ClipRRect(
-                                          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                                          child: product.imageUrl.trim().isNotEmpty?Image.network(
-                                            product.imageUrl,
-                                            fit: BoxFit.cover,
-                                            errorBuilder: (c,e,s)=>Center(child: Icon(Icons.broken_image),),
-                                          ):Container(
-                                            color: Colors.grey,
-                                            child: Center(child: Icon(Icons.image,size: 40,),),
-                                          ),
-                                        )),
-                                        Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                        child:Column(
-                                          crossAxisAlignment:CrossAxisAlignment.start,
-                                          children: [
-                                            Text(product.productName,
-                                            style: TextStyle(fontWeight: FontWeight.bold,),
-                                            maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
+                                        Expanded(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(10),
                                             ),
-                                            SizedBox(height: 4,),
-                                            Text("₹${product.price.toStringAsFixed(2)}"),
-                                            SizedBox(height: 8,),
-                                            SizedBox(
-                                              width: double.infinity,
-                                              child: ElevatedButton(onPressed: (){}, child:Text("Add",)),
-                                            )
-                                          ],
-                                        )
+                                            child:
+                                                product.imageUrl
+                                                    .trim()
+                                                    .isNotEmpty
+                                                ? Image.network(
+                                                    product.imageUrl,
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder: (c, e, s) =>
+                                                        Center(
+                                                          child: Icon(
+                                                            Icons.broken_image,
+                                                          ),
+                                                        ),
+                                                  )
+                                                : Container(
+                                                    color: Colors.grey,
+                                                    child: Center(
+                                                      child: Icon(
+                                                        Icons.image,
+                                                        size: 40,
+                                                      ),
+                                                    ),
+                                                  ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                product.productName,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              SizedBox(height: 4),
+                                              Text(
+                                                "₹${product.price.toStringAsFixed(2)}",
+                                              ),
+                                              SizedBox(height: 8),
+                                              SizedBox(
+                                                width: double.infinity,
+                                                child: ElevatedButton(
+                                                  onPressed: () {},
+                                                  child: Text("Add"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -392,10 +427,10 @@ class _HomePageState extends State<HomePage> {
                             );
                           },
                         );
-                      }
+                      },
                     ),
                   ),
-                  SliverToBoxAdapter(child: SizedBox(height: 10,),),
+                  SliverToBoxAdapter(child: SizedBox(height: 10)),
                   SliverToBoxAdapter(
                     child: Container(
                       color: Colors.purple[50],

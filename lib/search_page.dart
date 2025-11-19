@@ -83,6 +83,7 @@ class SearchState extends State<Search> {
                 onPressed: () {},
                 child: Text("Offers", style: TextStyle(color: Colors.blue)),
               ),
+              SizedBox(height: 10,),
               OutlinedButton(
                 style: ButtonStyle(
                   side: WidgetStateProperty.all(

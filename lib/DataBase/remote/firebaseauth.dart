@@ -33,7 +33,7 @@ class RemoteDb {
           'email': email,
           'phone': phone,
           'createdAt': DateTime.now(),
-          'role':'user',
+          'role': 'user',
         });
         await _auth.signOut();
         return (user, null);
@@ -56,7 +56,7 @@ class RemoteDb {
   }
 
   // login function
-  Future<(Map<String, dynamic>?,String?)>loginUser({
+  Future<(Map<String, dynamic>?, String?)> loginUser({
     required String email,
     required String password,
   }) async {
@@ -66,7 +66,7 @@ class RemoteDb {
         password: password,
       ); //signInWithEmailAndPassword is  a predefined function of firebase auth
       User? user = userCred.user;
-      if (user == null) return(null, "Login failed. Please try again.");
+      if (user == null) return (null, "Login failed. Please try again.");
       print("user:$user");
       await Future.delayed(Duration(milliseconds: 500));
       DocumentSnapshot userDoc = await _firestore
@@ -81,40 +81,42 @@ class RemoteDb {
         print("Name:${userDoc['name']}");
         print("Email:${userDoc['email']}");
         print("Phone:${userDoc['phone']}");
-        print("Role:${userDoc['role']??'user'}");
+        print("Role:${userDoc['role'] ?? 'user'}");
       } else {
         print("No  firestore data found for user${user.uid}");
       }
-      return ({
-        "name": data["name"] ?? "User",
-        "email": data["email"] ?? "Email",
-        "phone": data["phone"] ?? "N/A",
-        "profileUrl": data["profileUrl"] ?? " ",
-        "role":data["role"]??"user",
-      },null);
+      return (
+        {
+          "name": data["name"] ?? "User",
+          "email": data["email"] ?? "Email",
+          "phone": data["phone"] ?? "N/A",
+          "profileUrl": data["profileUrl"] ?? " ",
+          "role": data["role"] ?? "user",
+        },
+        null,
+      );
     } on FirebaseAuthException catch (e) {
       //catch block for firebase errors
       String errorMsg;
-      if (e.code =="user-not-found") {
-        errorMsg="No user found with this email";
+      if (e.code == "user-not-found") {
+        errorMsg = "No user found with this email";
       } else if (e.code == "invalid-credential") {
-        errorMsg="Incorrect email or password. Try again";
-      }else if(e.code =="invalid-email") {
-           errorMsg="Incorrect email address";
-      } else if(e.code =="user-disabled") {
-        errorMsg="Account has been disabled. Please contact support";
-      }else if(e.code =="too-many-requests") {
-        errorMsg="Too many failed attempts. Please wait for a few minutes before trying again";
-      }else{
-         errorMsg="An unexpected error occurred:${e.message}";
-       }
-               return(null,errorMsg);
-    }
-    catch (e) {
+        errorMsg = "Incorrect email or password. Try again";
+      } else if (e.code == "invalid-email") {
+        errorMsg = "Incorrect email address";
+      } else if (e.code == "user-disabled") {
+        errorMsg = "Account has been disabled. Please contact support";
+      } else if (e.code == "too-many-requests") {
+        errorMsg =
+            "Too many failed attempts. Please wait for a few minutes before trying again";
+      } else {
+        errorMsg = "An unexpected error occurred:${e.message}";
+      }
+      return (null, errorMsg);
+    } catch (e) {
       //catch block for any unexpected error
-      return(null,"an unexpected error occurred");
+      return (null, "an unexpected error occurred");
     }
-    return (null,"An unknown error occurred. Please try again");
   }
 
   //logout function
@@ -162,39 +164,34 @@ class RemoteDb {
       return null;
     }
   }
+
   //add products function
-Future<(bool, String?)> addProducts({
+  Future<(bool, String?)> addProducts({
     required String name,
-  required double price,
-  required String description,
-  required String imageUrl,
-  required String category,
-  required double stock,
-})async
-{
- try
- {
-  final docRef=await _firestore.collection("products").add({
-    "productName":name.trim(),
-    "category":category.trim(),
-    "price":price,
-    "description":description.trim(),
-    "stock":stock,
-    "imageUrl":imageUrl.trim(),
-    "createdAt":FieldValue.serverTimestamp(),
-  });
-  await docRef.update({"productId":docRef.id});
-  print("Products added successfully wit id:${docRef.id}");
-  return(true, null);
- }
- on FirebaseException catch(e)
-  {
-    return(false,e.message??"Error adding product.Try again later");
+    required double price,
+    required String description,
+    required String imageUrl,
+    required String category,
+    required double stock,
+  }) async {
+    try {
+      final docRef = await _firestore.collection("products").add({
+        "productName": name.trim(),
+        "category": category.trim(),
+        "price": price,
+        "description": description.trim(),
+        "stock": stock,
+        "imageUrl": imageUrl.trim(),
+        "createdAt": FieldValue.serverTimestamp(),
+      });
+      await docRef.update({"productId": docRef.id});
+      print("Products added successfully wit id:${docRef.id}");
+      return (true, null);
+    } on FirebaseException catch (e) {
+      return (false, e.message ?? "Error adding product.Try again later");
+    } catch (e) {
+      print("Error adding product:$e");
+      return (false, "failed to add product. Try again after a while");
+    }
   }
- catch(e)
-  {
-    print("Error adding product:$e");
-    return(false, "failed to add product. Try again after a while");
-  }
-}
 }

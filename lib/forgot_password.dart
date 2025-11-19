@@ -21,12 +21,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(11.0),
           ),
-          title: Text("Error",),
-          content: Text("Enter a valid email address",),
+          title: Text("Error"),
+          content: Text("Enter a valid email address"),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text("Ok",),
+              child: Text("Ok"),
             ),
           ],
         ),
@@ -37,17 +37,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       showDialog(
-        barrierDismissible:false,
+        barrierDismissible: false,
         context: context,
         builder: (_) => AlertDialog(
           backgroundColor: Colors.purple[50],
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(11.0)
+            borderRadius: BorderRadius.circular(11.0),
           ),
           title: Row(
             children: [
-              Icon(Icons.mark_email_read,),
-              SizedBox(width: 8,),
+              Icon(Icons.mark_email_read),
+              SizedBox(width: 8),
               Text("Email sent"),
             ],
           ),
@@ -62,7 +62,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (_) => Login_UI()),
-                    (route)=>false,
+                  (route) => false,
                 );
               },
               child: Text("ok"),
@@ -78,18 +78,25 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         message = "invalid email address.";
       }
       showDialog(
-          barrierDismissible:false,
-          context: context,builder: (_)=>AlertDialog(
-        backgroundColor:Colors.purple[50],
-        title: Row(children: [Icon(Icons.error),SizedBox(width: 5,),Text("Error"),],),
-        content: Text(message),
-        actions: [
-          TextButton(onPressed: ()=>Navigator.pop(context), child: Text("Ok"))
-        ],
-      )
+        barrierDismissible: false,
+        context: context,
+        builder: (_) => AlertDialog(
+          backgroundColor: Colors.purple[50],
+          title: Row(
+            children: [Icon(Icons.error), SizedBox(width: 5), Text("Error")],
+          ),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Ok"),
+            ),
+          ],
+        ),
       );
-    } 
-    finally {setState(() => isLoading = false);}
+    } finally {
+      setState(() => isLoading = false);
+    }
   }
 
   @override
@@ -167,8 +174,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             "An email will be sent to above address with a link to reset password.",
                       ),
                       TextSpan(
-                        text: "\nEmail will be sent only on registered Email ID.",
-                        style: TextStyle(fontWeight: FontWeight.bold,),
+                        text:
+                            "\nEmail will be sent only on registered Email ID.",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -184,7 +192,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     onPressed: () => Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (_) => Login_UI()),
-                        (route)=>false,
+                      (route) => false,
                     ),
                     child: Text(
                       "Remember password?",

@@ -131,7 +131,7 @@ class _Login_UIState extends State<Login_UI> {
                           });
                           final (userData, errorMsg) = await RemoteDb.instance
                               .loginUser(email: email, password: password);
-                          final userRole=userData?['role'];
+                          final userRole = userData?['role'];
                           setState(() {
                             _isLoading = false;
                           });
@@ -144,7 +144,7 @@ class _Login_UIState extends State<Login_UI> {
                                 title: Row(
                                   children: [
                                     Text("Login Failed"),
-                                    SizedBox(width: 5,),
+                                    SizedBox(width: 5),
                                     Icon(Icons.cancel),
                                   ],
                                 ),
@@ -158,42 +158,39 @@ class _Login_UIState extends State<Login_UI> {
                               ),
                             );
                           } else {
-                            if(userRole=="user")
-                              {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => HomePage(
-                                      userName: userData?["name"] ?? "User",
-                                      phoneNumber: userData?["phone"] ?? "Null",
-                                      profileUrl: userData?["profileUrl"] ?? " ",
-                                    ),
+                            if (userRole == "user") {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => HomePage(
+                                    userName: userData?["name"] ?? "User",
+                                    phoneNumber: userData?["phone"] ?? "Null",
+                                    profileUrl: userData?["profileUrl"] ?? " ",
                                   ),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Logged in as:${userData?["email"] ?? "E-Mail"}",
-                                    ),
+                                ),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Logged in as:${userData?["email"] ?? "E-Mail"}",
                                   ),
-                                );
-                              }
-                            else
-                              {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>Addproducts()
+                                ),
+                              );
+                            } else {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => Addproducts(),
+                                ),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Admin logged in as:${userData?["email"] ?? "E-Mail"}",
                                   ),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Admin logged in as:${userData?["email"] ?? "E-Mail"}",
-                                    ),
-                                  ),
-                                );
-                              }
+                                ),
+                              );
+                            }
                           }
                           // } else {
                           //   ScaffoldMessenger.of(context).showSnackBar(

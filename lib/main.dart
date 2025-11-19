@@ -10,23 +10,21 @@ import 'package:flutter/foundation.dart';
 //internet_connection_checker_plus
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-
 final GlobalKey<ScaffoldMessengerState> rootMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if(kIsWeb){
+  if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyBGb4C50O_DXKo-VCS5Kn0iSEbHxh_Up2c",
-          appId: "1:773979981923:web:e56d09e35d64158c969056",
-          messagingSenderId:"773979981923",
-          projectId:  "nexaflow-1d94b",
+        apiKey: "AIzaSyBGb4C50O_DXKo-VCS5Kn0iSEbHxh_Up2c",
+        appId: "1:773979981923:web:e56d09e35d64158c969056",
+        messagingSenderId: "773979981923",
+        projectId: "nexaflow-1d94b",
       ),
     );
-  }
-  else{
+  } else {
     await Firebase.initializeApp();
   }
   // Quick Firebase test:
@@ -44,30 +42,34 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final StreamSubscription _connectivitySubscription;//user-defined variable for monitoring connectivity changes
-  bool isOffline=false;
+  late final StreamSubscription
+  _connectivitySubscription; //user-defined variable for monitoring connectivity changes
+  bool isOffline = false;
   @override
   void initState() {
     super.initState();
-   WidgetsBinding.instance.addPostFrameCallback((_)async{
-     bool hasInternet=await checkInternetConnection();
-     final messenger=rootMessengerKey.currentState;
-     if(messenger==null)return;
-     isOffline=!hasInternet;
-     if(!hasInternet){
-       messenger.showSnackBar(SnackBar(
-         content:Text("No internet connection!"),
-         backgroundColor: Colors.red,
-         behavior: SnackBarBehavior.floating,
-         margin: EdgeInsets.all(16.0),
-         duration: Duration(days: 1),
-       ));
-     }
-   });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      bool hasInternet = await checkInternetConnection();
+      final messenger = rootMessengerKey.currentState;
+      if (messenger == null) return;
+      isOffline = !hasInternet;
+      if (!hasInternet) {
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text("No internet connection!"),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.all(16.0),
+            duration: Duration(days: 1),
+          ),
+        );
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //onConnectivityChanged is a pre-defined function to listen to connectivity changes
       _connectivitySubscription = Connectivity().onConnectivityChanged.listen((
-          connectivityResult) async {
+        connectivityResult,
+      ) async {
         await Future.delayed(const Duration(milliseconds: 500));
         bool hasInternet = await checkInternetConnection();
         final messenger = rootMessengerKey.currentState;
@@ -75,15 +77,16 @@ class _MyAppState extends State<MyApp> {
         if (!hasInternet && !isOffline) {
           isOffline = true;
           messenger.hideCurrentSnackBar();
-          messenger.showSnackBar(SnackBar(
-            content: Text("No internet connection!"),
-            backgroundColor: Colors.red,
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.all(16.0),
-            duration: Duration(days: 1),
-          ),);
-        }
-        else if (hasInternet && isOffline) {
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text("No internet connection!"),
+              backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating,
+              margin: EdgeInsets.all(16.0),
+              duration: Duration(days: 1),
+            ),
+          );
+        } else if (hasInternet && isOffline) {
           isOffline = false;
           messenger.hideCurrentSnackBar();
           messenger.showSnackBar(
@@ -100,7 +103,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<bool>checkInternetConnection()async{
+  Future<bool> checkInternetConnection() async {
     return await InternetConnection().hasInternetAccess;
   }
 

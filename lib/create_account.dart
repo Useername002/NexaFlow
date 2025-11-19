@@ -14,7 +14,7 @@ class _CreateAccountState extends State<CreateAccount> {
   //for phone no. exceeding ,more than 10 digits
 String? phoneError;
 String?passwordError;//for password related errors
-
+//text editing controllers
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();

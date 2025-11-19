@@ -19,11 +19,13 @@ class cartState extends State<cart> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.shopping_cart,
-              color: Colors.grey,
-              size: 200,
+            Icon(Icons.shopping_cart, color: Colors.grey, size: 200),
+            Center(
+              child: Text(
+                "Cart empty, add items to continue",
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
             ),
-            Center(child: Text("Cart empty, add items to continue",style: TextStyle(fontSize: 20,color: Colors.grey),))
           ],
         ),
       ),
